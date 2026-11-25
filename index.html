@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gujju AI</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#101827;color:white}
+header{padding:22px;background:#17243a;text-align:center}
+header h1{margin:0;color:#55d6be}
+header p{color:#cbd5e1}
+main{max-width:650px;margin:25px auto;padding:15px}
+.welcome{text-align:center;margin:35px 0}
+.welcome h2{font-size:27px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:20px 0}
+.tools span{background:#23344e;padding:12px;border-radius:12px}
+#chat{min-height:180px;background:#17243a;border-radius:15px;padding:15px;margin:15px 0}
+.msg{padding:12px;margin:8px 0;border-radius:12px;background:#263b58;line-height:1.5}
+.user{background:#075e54}
+textarea{width:100%;padding:15px;border-radius:12px;font-size:16px;resize:vertical}
+.actions{display:flex;gap:10px;margin-top:10px}
+button{padding:13px;border:0;border-radius:10px;background:#55d6be;color:#102030;font-weight:bold;font-size:16px}
+#send{flex:1}
+small{color:#aab7c8}
+</style>
+</head>
+<body>
+<header>
+<h1>✨ GUJJU AI</h1>
+<p>તમારો ગુજરાતી સ્માર્ટ AI સહાયક</p>
+</header>
+<main>
+<div class="welcome">
+<h2>નમસ્તે! 🙏</h2>
+<p>આજે હું તમારી શું મદદ કરી શકું?</p>
+</div>
+<div class="tools">
+<span>✍️ લખાણ</span>
+<span>🌐 ભાષાંતર</span>
+<span>🧮 ગણતરી</span>
+<span>💡 નવા વિચારો</span>
+</div>
+<div id="chat">
+<div class="msg">નમસ્તે! હું Gujju AI છું. તમારો પ્રશ્ન નીચે લખો.</div>
+</div>
+<textarea id="question" rows="3" placeholder="અહીં તમારો પ્રશ્ન લખો..."></textarea>
+<div class="actions">
+<button id="mic" onclick="speak()">🎤 બોલો</button>
+<button id="send" onclick="reply()">મોકલો ➤</button>
+</div>
+<p><small>Gujju AI – પ્રથમ પ્રાયોગિક આવૃત્તિ</small></p>
+</main>
+<script>
+function reply(){
+let q=document.getElementById("question");
+let chat=document.getElementById("chat");
+if(!q.value.trim())return;
+chat.innerHTML+='<div class="msg user">'+q.value.replace(/</g,"&lt;").replace(/>/g,"&gt;")+'</div>';
+chat.innerHTML+='<div class="msg">આભાર! Gujju AIનું AI એન્જિન હજી જોડવાનું બાકી છે. ટૂંક સમયમાં અહીં સાચા AI જવાબો માટે સુવિધા ઉમેરવામાં આવશે.</div>';
+q.value="";
+chat.scrollTop=chat.scrollHeight;
+}
+function speak(){
+let Speech=window.SpeechRecognition||window.webkitSpeechRecognition;
+if(!Speech){alert("તમારા બ્રાઉઝરમાં અવાજની સુવિધા ઉપલબ્ધ નથી.");return;}
+let r=new Speech();
+r.lang="gu-IN";
+r.onresult=e=>document.getElementById("question").value=e.results[0][0].transcript;
+r.start();
+}
+</script>
+</body>
+</html>
